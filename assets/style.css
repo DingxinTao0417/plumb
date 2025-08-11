@@ -34,9 +34,50 @@ header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(180%) blur(8
 .btn-ghost{background:transparent}
 .hero-card{background:linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02)); border:1px solid rgba(255,255,255,.08); padding:18px; border-radius:var(--radius); display:grid; gap:14px}
 .kv{aspect-ratio:4/3; border-radius:14px; overflow:hidden; border:1px solid rgba(255,255,255,.06); background: conic-gradient(from 200deg at 60% 40%, #1f2937 0%, #0b1226 40%, #1e293b 100%); position:relative}
-.kv::after{content:""; position:absolute; inset:0; background:radial-gradient(300px 300px at 70% 40%, rgba(96,165,250,.35), transparent 70%), radial-gradient(250px 200px at 30% 70%, rgba(34,211,238,.25), transparent 60%)}
 .kv-grid{display:grid; grid-template-columns:1fr 1fr; gap:10px}
 @media (max-width:980px){.hero-grid{grid-template-columns:1fr}}
+
+/* --- Hero carousel --- */
+.carousel{
+  position:relative;
+  border-radius:14px;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.06);
+  background:#0b1226;
+  aspect-ratio:1/1;
+}
+.car-viewport{ overflow:hidden; }
+.car-track{ display:flex; transition:transform .5s ease; will-change:transform; }
+.car-slide{ min-width:100%; user-select:none; }
+.car-slide img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+.car-btn{
+  position:absolute; top:50%; transform:translateY(-50%);
+  width:40px; height:40px; border-radius:999px;
+  border:1px solid rgba(255,255,255,.2);
+  background:rgba(0,0,0,.35); color:#fff; display:grid; place-items:center;
+  cursor:pointer; backdrop-filter: blur(4px);
+}
+.car-btn:hover{ background:rgba(0,0,0,.5); }
+.car-btn.prev{ left:10px; }
+.car-btn.next{ right:10px; }
+
+.car-dots{
+  position:absolute; left:0; right:0; bottom:10px;
+  display:flex; gap:8px; justify-content:center;
+}
+.car-dots .car-dot{
+  width:8px; height:8px; border-radius:999px; border:none; cursor:pointer;
+  background:rgba(255,255,255,.45);
+}
+.car-dots .car-dot.active{ background:var(--brand); }
+
+@media (max-width: 640px){
+  .carousel{ aspect-ratio:1/1; }
+  .car-btn { 
+    display: none !important;
+  }
+}
 
 section{padding:56px 0}
 .section-head{display:flex; align-items:end; justify-content:space-between; gap:16px; margin-bottom:22px}
