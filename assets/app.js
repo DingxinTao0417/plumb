@@ -1,3 +1,6 @@
+// API
+const API = '/api/bookings/';
+
 // Year
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -26,9 +29,11 @@ revealEls.forEach(el=>io.observe(el));
 // Booking form -> Django
 const form = document.getElementById('contactForm');
 const statusEl = document.getElementById('formStatus');
+
 form?.addEventListener('submit', async (ev) => {
   ev.preventDefault();
   statusEl.textContent = '';
+
   const fd = new FormData(form);
   const payload = {
     name: (fd.get('name')||'').toString().trim(),
@@ -37,24 +42,32 @@ form?.addEventListener('submit', async (ev) => {
     service: (fd.get('service')||'').toString().trim(),
     message: (fd.get('message')||fd.get('msg')||'').toString().trim()
   };
-  if(!payload.name || !payload.phone){
+
+  if (!payload.name || !payload.phone) {
     statusEl.style.color = getComputedStyle(document.documentElement).getPropertyValue('--error');
     statusEl.textContent = 'Please provide your name and phone.';
     return;
   }
-  try{
-    const res = await fetch('/api/bookings/', {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify(payload)
+
+  try {
+    const res = await fetch(API, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
     });
-    if(!res.ok) throw new Error('Network');
-    const json = await res.json();
+
+    if (!res.ok) {
+      const text = await res.text().catch(()=>'');
+      throw new Error(`HTTP ${res.status}: ${text || 'No response body'}`);
+    }
+
+    const json = await res.json().catch(()=>({}));
     statusEl.style.color = 'var(--accent)';
-    statusEl.textContent = 'Thanks! Your request was received. Ref: #' + json.id;
+    statusEl.textContent = 'Thanks! Your request was received. Ref: #' + (json.id ?? 'N/A');
     form.reset();
-  }catch(err){
+  } catch (err) {
     statusEl.style.color = getComputedStyle(document.documentElement).getPropertyValue('--error');
-    statusEl.textContent = 'Submit failed. Please try again or call us.';
+    statusEl.textContent = `Network error: ${err.message}. Please try again.`;
+    console.error(err);
   }
 });
