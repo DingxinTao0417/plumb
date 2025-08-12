@@ -38,7 +38,7 @@ def create_booking(request):
 
     # send emails
     admin_to = getattr(settings, 'ADMIN_NOTIFICATION_EMAIL', None)
-    subject = f"[FlowFix] New booking #{booking.id}"
+    subject = f"[EliteFlow] New booking #{booking.id}"
     body = (
         f"Name: {name}\nPhone: {phone}\nEmail: {email}\n"
         f"Service: {service}\nMessage:\n{message}\n"
@@ -57,7 +57,7 @@ def create_booking(request):
         try:
             reply = EmailMessage(
                 subject="We received your request",
-                body=("Thanks for contacting FlowFix Plumbing!\n"
+                body=("Thanks for contacting EliteFlow Plumbing!\n"
                       "We will call you shortly to confirm your appointment.\n\n"
                       f"Ref #{booking.id}"),
                 from_email=getattr(settings, 'DEFAULT_FROM_EMAIL', settings.EMAIL_HOST_USER),
