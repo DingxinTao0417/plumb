@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-p6ij3-y9mq4_9&*nljxh1xc!qr%yu&ntj^w)es-@)j!db#jwp#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["eliteflowvip.com", "www.eliteflowvip.com"]
+ALLOWED_HOSTS = ["38.12.24.183", "127.0.0.1", "localhost", "eliteflowvip.com", "www.eliteflowvip.com"]
 
 
 # Application definition
